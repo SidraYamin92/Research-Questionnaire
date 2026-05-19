@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Research study on AI trust and online shopping decisions — NED University">
+    <title>Cognitive AI Research Study - NED University</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        html, body { overscroll-behavior: none; }
+        .scenario-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.3rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: 0.03em;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Timer -->
+    <div class="timer-bar" id="timerBar">
+        <div class="timer-display" id="timerDisplay">⏱ 00:00</div>
+        <div class="progress-text" id="progressText">0% Complete</div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+
+        <div class="section active" id="section-welcome">
+            <div class="welcome-header">
+                <h1>🎓 Research Study</h1>
+                <h2>Cognitive Agentic AI for Human-AI Collaboration</h2>
+                <p class="subtitle">Understanding Online Shopping Decisions and Trust in AI</p>
+            </div>
+            <div class="university-info">
+                <p><strong>NED University of Engineering and Technology</strong></p>
+                <p>Postgraduate Diploma in Data Science</p>
+            </div>
+            <div class="info-box">
+                <h3>📋 Study Information</h3>
+                <ul>
+                    <li>⏱️ <strong>Time Required:</strong> 15-18 minutes</li>
+                    <li>📝 <strong>Questions:</strong> 55 questions</li>
+                    <li>🎯 <strong>Topic:</strong> Online shopping decisions and AI trust</li>
+                    <li>🔒 <strong>Privacy:</strong> Your data is confidential</li>
+                </ul>
+            </div>
+            <button class="btn btn-primary btn-large" onclick="showSection('section-consent')">Begin Study →</button>
+
+        </div>
+
+        <div class="section" id="section-consent">
+            <h2>Informed Consent for Research Participation</h2>
+            <div class="consent-box">
+                <h3>Research Title</h3>
+                <p>Cognitive Agentic AI for Human-AI Collaboration: Understanding Online Shopping Decisions</p>
+                <h3>Research Team</h3>
+                <p><strong>Principal Investigator:</strong> Sidra Yamin<br><strong>Supervisor:</strong> Imran Bashir<br>NED University of Engineering and Technology<br>Programme: Postgraduate Diploma in Data Science</p>
+                <h3>Purpose of the Study</h3>
+                <p>This research investigates how people make online shopping decisions and how they trust AI recommendations.</p>
+                <h3>What You Will Do</h3>
+                <p>You will complete shopping scenarios and answer questions about your decisions, thinking style, and trust in AI. This will take approximately 15-18 minutes.</p>
+                <h3>Confidentiality</h3>
+                <p>Your responses are completely anonymous. No personally identifiable information will be collected.</p>
+                <h3>Voluntary Participation</h3>
+                <p>Your participation is entirely voluntary. You may withdraw at any time without penalty.</p>
+            </div>
+            <div class="consent-checkbox">
+                <label>
+                    <input type="checkbox" id="consentCheck" onchange="toggleConsentButton()">
+                    <strong>I confirm that I am 18+ years old, have read this information, and voluntarily agree to participate.</strong>
+                </label>
+            </div>
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="showSection('section-welcome')">← Back</button>
+                <button class="btn btn-primary" id="consentButton" disabled onclick="startSurvey()">I Agree - Start Survey →</button>
+            </div>
+
+        </div>
+
+        <div class="section" id="section-demographics">
+            <h2>Part A: Your Information</h2>
+            <p class="section-intro">Please provide the following information (6 questions):</p>
+
+            <div class="question">
+                <label>1. What is your age group? <span class="required">*</span></label>
+                <select name="age" required>
+                    <option value="">Select...</option>
+                    <option value="18-24">18–24 years</option>
+                    <option value="25-34">25–34 years</option>
+                    <option value="35-44">35–44 years</option>
+                    <option value="45-54">45–54 years</option>
+                    <option value="55-64">55–64 years</option>
+                    <option value="65+">65+ years</option>
+                </select>
+            </div>
+
+            <div class="question">
+                <label>2. What is your gender? <span class="required">*</span></label>
+                <div class="radio-group">
+                    <label><input type="radio" name="gender" value="male" required> Male</label>
+                    <label><input type="radio" name="gender" value="female"> Female</label>
+                    <label><input type="radio" name="gender" value="other"> Other / Non-binary</label>
+                    <label><input type="radio" name="gender" value="prefer-not"> Prefer not to say</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <label>3. What is your highest level of education? <span class="required">*</span></label>
+                <select name="education" required>
+                    <option value="">Select...</option>
+                    <option value="highschool">High school</option>
+                    <option value="bachelors">Bachelor's degree</option>
+                    <option value="masters">Master's degree</option>
+                    <option value="phd">Doctoral degree</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="question">
+                <label>4. How often do you shop online? <span class="required">*</span></label>
+                <select name="shopping-frequency" required>
+                    <option value="">Select...</option>
+                    <option value="daily">Daily</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="rarely">Rarely</option>
+                </select>
+            </div>
+
+            <div class="question">
+                <label>5. How comfortable are you with technology? <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Not comfortable</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Very comfortable</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="tech-comfort" value="1" required> 1</label>
+                        <label><input type="radio" name="tech-comfort" value="2"> 2</label>
+                        <label><input type="radio" name="tech-comfort" value="3"> 3</label>
+                        <label><input type="radio" name="tech-comfort" value="4"> 4</label>
+                        <label><input type="radio" name="tech-comfort" value="5"> 5</label>
+                        <label><input type="radio" name="tech-comfort" value="6"> 6</label>
+                        <label><input type="radio" name="tech-comfort" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="question">
+                <label>6. Have you used AI shopping recommendations (e.g., Amazon, Daraz)? <span class="required">*</span></label>
+                <div class="radio-group">
+                    <label><input type="radio" name="ai-experience" value="frequently" required> Yes, frequently</label>
+                    <label><input type="radio" name="ai-experience" value="occasionally"> Yes, occasionally</label>
+                    <label><input type="radio" name="ai-experience" value="rarely"> Yes, rarely</label>
+                    <label><input type="radio" name="ai-experience" value="never"> No, never</label>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="showSection('section-consent')">← Back</button>
+                <button class="btn btn-primary" onclick="validateAndNext('section-demographics', 'section-scenarios-intro')">Continue →</button>
+            </div>
+
+        </div>
+
+        <div class="section" id="section-scenarios-intro">
+            <h2>Part B: Shopping Scenarios</h2>
+            <div class="info-box">
+                <h3>📝 Instructions</h3>
+                <p>You will see <strong>7 different online shopping scenarios</strong>. For each:</p>
+                <ul>
+                    <li>Imagine you are actually shopping online</li>
+                    <li>Consider whether to purchase the product shown</li>
+                    <li>Answer honestly — there are no right or wrong answers</li>
+                </ul>
+            </div>
+            <button class="btn btn-primary btn-large" onclick="showSection('section-scenario1')">Start Scenarios →</button>
+
+        </div>
+
+        <div class="section" id="section-scenario1">
+            <h2>Scenario 1 of 7: Laptop Backpack</h2>
+            <div class="scenario-badge">🧠 Anchoring & Price Perception</div>
+            <div class="product-card">
+                <div class="product-image"><img src="images/product1.jpg" alt="Premium Laptop Backpack" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=placeholder-img>🛍️ Premium Laptop Backpack</div>';"></div>
+                <div class="product-details">
+                    <h3>Premium Laptop Backpack</h3>
+                    <div class="product-rating">⭐⭐⭐⭐⭐ 4.5+ stars</div>
+                    <ul class="product-features">
+                        <li>✓ Water-resistant</li>
+                        <li>✓ USB charging port</li>
+                        <li>✓ Fits 15.6" laptops</li>
+                        <li>✓ Multiple compartments</li>
+                    </ul>
+                    <div class="product-price" id="price-scenario1"></div>
+                </div>
+            </div>
+
+            <div class="ai-recommendation">
+                <div class="ai-badge">🤖 AI Recommendation</div>
+                <p>"Based on your browsing history and 2,847 similar shoppers, this backpack scores <strong>9.2/10</strong> for value. Users who bought this also rated durability 4.8/5."</p>
+            </div>
+
+            <div class="question">
+                <label>7. How likely are you to purchase this backpack? <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Very unlikely</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Very likely</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="s1-purchase" value="1" required> 1</label>
+                        <label><input type="radio" name="s1-purchase" value="2"> 2</label>
+                        <label><input type="radio" name="s1-purchase" value="3"> 3</label>
+                        <label><input type="radio" name="s1-purchase" value="4"> 4</label>
+                        <label><input type="radio" name="s1-purchase" value="5"> 5</label>
+                        <label><input type="radio" name="s1-purchase" value="6"> 6</label>
+                        <label><input type="radio" name="s1-purchase" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <label>8. How would you rate the value for money? <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Very poor value</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Excellent value</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="s1-value" value="1" required> 1</label>
+                        <label><input type="radio" name="s1-value" value="2"> 2</label>
+                        <label><input type="radio" name="s1-value" value="3"> 3</label>
+                        <label><input type="radio" name="s1-value" value="4"> 4</label>
+                        <label><input type="radio" name="s1-value" value="5"> 5</label>
+                        <label><input type="radio" name="s1-value" value="6"> 6</label>
+                        <label><input type="radio" name="s1-value" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="showSection('section-scenarios-intro')">← Back</button>
+                <button class="btn btn-primary" onclick="validateAndNext('section-scenario1', 'section-scenario2')">Next →</button>
+            </div>
+
+        </div>
+
+        <div class="section" id="section-scenario2">
+            <h2>Scenario 2 of 7: Wireless Earbuds</h2>
+            <div class="scenario-badge">⚡ Scarcity & Urgency</div>
+            <div class="product-card">
+                <div class="product-image"><img src="images/product2.jpg" alt="Premium Wireless Earbuds" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=placeholder-img>🛍️ Premium Wireless Earbuds</div>';"></div>
+                <div class="product-details">
+                    <h3>Premium Wireless Earbuds</h3>
+                    <div class="product-rating">⭐⭐⭐⭐⭐ 4.5+ stars</div>
+                    <ul class="product-features">
+                        <li>✓ Active Noise Cancellation</li>
+                        <li>✓ 30-hour battery</li>
+                        <li>✓ Premium sound quality</li>
+                        <li>✓ Only 3 left in stock!</li>
+                    </ul>
+                    <div class="product-price" id="price-scenario2"></div>
+                </div>
+            </div>
+
+            <div class="ai-recommendation">
+                <div class="ai-badge">🤖 AI Recommendation</div>
+                <p>"⚠️ High demand alert! This product sells out every week. <strong>87% of users</strong> who viewed this item purchased within 24 hours."</p>
+            </div>
+
+            <div class="question">
+                <label>9. How motivated are you to purchase these earbuds? <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Not at all motivated</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Extremely motivated</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="s2-motivation" value="1" required> 1</label>
+                        <label><input type="radio" name="s2-motivation" value="2"> 2</label>
+                        <label><input type="radio" name="s2-motivation" value="3"> 3</label>
+                        <label><input type="radio" name="s2-motivation" value="4"> 4</label>
+                        <label><input type="radio" name="s2-motivation" value="5"> 5</label>
+                        <label><input type="radio" name="s2-motivation" value="6"> 6</label>
+                        <label><input type="radio" name="s2-motivation" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <label>10. How urgent does this purchase feel? <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Not urgent at all</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Extremely urgent</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="s2-urgency" value="1" required> 1</label>
+                        <label><input type="radio" name="s2-urgency" value="2"> 2</label>
+                        <label><input type="radio" name="s2-urgency" value="3"> 3</label>
+                        <label><input type="radio" name="s2-urgency" value="4"> 4</label>
+                        <label><input type="radio" name="s2-urgency" value="5"> 5</label>
+                        <label><input type="radio" name="s2-urgency" value="6"> 6</label>
+                        <label><input type="radio" name="s2-urgency" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="showSection('section-scenario1')">← Back</button>
+                <button class="btn btn-primary" onclick="validateAndNext('section-scenario2', 'section-scenario3')">Next →</button>
+            </div>
+
+        </div>
+
+        <div class="section" id="section-scenario3">
+            <h2>Scenario 3 of 7: Phone Case</h2>
+            <div class="scenario-badge">👥 Social Proof</div>
+            <div class="product-card">
+                <div class="product-image"><img src="images/product3.jpg" alt="Premium Phone Case" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=placeholder-img>🛍️ Premium Phone Case</div>';"></div>
+                <div class="product-details">
+                    <h3>Premium Phone Case</h3>
+                    <div class="product-rating">⭐⭐⭐⭐⭐ 4.5+ stars</div>
+                    <ul class="product-features">
+                        <li>✓ Military-grade protection</li>
+                        <li>✓ Wireless charging compatible</li>
+                        <li>✓ 4,523 five-star reviews</li>
+                        <li>✓ "Bestseller" badge</li>
+                    </ul>
+                    <div class="product-price" id="price-scenario3"></div>
+                </div>
+            </div>
+
+            <div class="ai-recommendation">
+                <div class="ai-badge">🤖 AI Recommendation</div>
+                <p>"This is the <strong>#1 rated</strong> phone case this month. 4,523 verified buyers gave it 5 stars. Recommended by 96% of users."</p>
+            </div>
+
+            <div class="question">
+                <label>11. How much do customer reviews and ratings influence your decision? <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Not at all</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Extremely</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="s3-social" value="1" required> 1</label>
+                        <label><input type="radio" name="s3-social" value="2"> 2</label>
+                        <label><input type="radio" name="s3-social" value="3"> 3</label>
+                        <label><input type="radio" name="s3-social" value="4"> 4</label>
+                        <label><input type="radio" name="s3-social" value="5"> 5</label>
+                        <label><input type="radio" name="s3-social" value="6"> 6</label>
+                        <label><input type="radio" name="s3-social" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <label>12. How likely are you to purchase this case? <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Very unlikely</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Very likely</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="s3-purchase" value="1" required> 1</label>
+                        <label><input type="radio" name="s3-purchase" value="2"> 2</label>
+                        <label><input type="radio" name="s3-purchase" value="3"> 3</label>
+                        <label><input type="radio" name="s3-purchase" value="4"> 4</label>
+                        <label><input type="radio" name="s3-purchase" value="5"> 5</label>
+                        <label><input type="radio" name="s3-purchase" value="6"> 6</label>
+                        <label><input type="radio" name="s3-purchase" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="showSection('section-scenario2')">← Back</button>
+                <button class="btn btn-primary" onclick="validateAndNext('section-scenario3', 'section-scenario4')">Next →</button>
+            </div>
+
+        </div>
+
+        <div class="section" id="section-scenario4">
+            <h2>Scenario 4 of 7: Smart Watch</h2>
+            <div class="scenario-badge">😰 Loss Aversion</div>
+            <div class="product-card">
+                <div class="product-image"><img src="images/product4.jpg" alt="Smart Watch Pro" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=placeholder-img>🛍️ Smart Watch Pro</div>';"></div>
+                <div class="product-details">
+                    <h3>Smart Watch Pro</h3>
+                    <div class="product-rating">⭐⭐⭐⭐⭐ 4.5+ stars</div>
+                    <ul class="product-features">
+                        <li>✓ Health & fitness tracking</li>
+                        <li>✓ GPS</li>
+                        <li>✓ 7-day battery</li>
+                        <li>✓ Limited time: 40% OFF — ends tonight!</li>
+                    </ul>
+                    <div class="product-price" id="price-scenario4"></div>
+                </div>
+            </div>
+
+            <div class="ai-recommendation">
+                <div class="ai-badge">🤖 AI Recommendation</div>
+                <p>"⏳ Flash sale! Regular price Rs12,000. Today only: Rs7,200. You'll <strong>save Rs4,800</strong>. This deal expires in 2 hours."</p>
+            </div>
+
+            <div class="question">
+                <label>13. How urgent does this purchase feel? <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Not urgent</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Very urgent</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="s4-urgency" value="1" required> 1</label>
+                        <label><input type="radio" name="s4-urgency" value="2"> 2</label>
+                        <label><input type="radio" name="s4-urgency" value="3"> 3</label>
+                        <label><input type="radio" name="s4-urgency" value="4"> 4</label>
+                        <label><input type="radio" name="s4-urgency" value="5"> 5</label>
+                        <label><input type="radio" name="s4-urgency" value="6"> 6</label>
+                        <label><input type="radio" name="s4-urgency" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <label>14. How likely are you to purchase this smartwatch? <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Very unlikely</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Very likely</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="s4-purchase" value="1" required> 1</label>
+                        <label><input type="radio" name="s4-purchase" value="2"> 2</label>
+                        <label><input type="radio" name="s4-purchase" value="3"> 3</label>
+                        <label><input type="radio" name="s4-purchase" value="4"> 4</label>
+                        <label><input type="radio" name="s4-purchase" value="5"> 5</label>
+                        <label><input type="radio" name="s4-purchase" value="6"> 6</label>
+                        <label><input type="radio" name="s4-purchase" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="showSection('section-scenario3')">← Back</button>
+                <button class="btn btn-primary" onclick="validateAndNext('section-scenario4', 'section-scenario5')">Next →</button>
+            </div>
+
+        </div>
+
+        <div class="section" id="section-scenario5">
+            <h2>Scenario 5 of 7: Running Shoes</h2>
+            <div class="scenario-badge">🤯 Choice Overload</div>
+            <div class="product-card">
+                <div class="product-image"><img src="images/product5.jpg" alt="Running Shoes Pro" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=placeholder-img>🛍️ Running Shoes Pro</div>';"></div>
+                <div class="product-details">
+                    <h3>Running Shoes Pro</h3>
+                    <div class="product-rating">⭐⭐⭐⭐⭐ 4.5+ stars</div>
+                    <ul class="product-features">
+                        <li>✓ 237 similar options available</li>
+                        <li>✓ Filters: brand, material, size, price, rating...</li>
+                        <li>✓ Multiple AI recommendations</li>
+                        <li>✓ Conflicting user reviews</li>
+                    </ul>
+                    <div class="product-price" id="price-scenario5"></div>
+                </div>
+            </div>
+
+            <div class="ai-recommendation">
+                <div class="ai-badge">🤖 AI Recommendation</div>
+                <p>"We found <strong>237 running shoes</strong> matching your preferences. Here are the top 5 based on 12 different criteria..."</p>
+            </div>
+
+            <div class="question">
+                <label>15. How pressured do you feel to decide quickly? <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = No pressure</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Extremely pressured</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="s5-pressure" value="1" required> 1</label>
+                        <label><input type="radio" name="s5-pressure" value="2"> 2</label>
+                        <label><input type="radio" name="s5-pressure" value="3"> 3</label>
+                        <label><input type="radio" name="s5-pressure" value="4"> 4</label>
+                        <label><input type="radio" name="s5-pressure" value="5"> 5</label>
+                        <label><input type="radio" name="s5-pressure" value="6"> 6</label>
+                        <label><input type="radio" name="s5-pressure" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <label>16. How likely are you to purchase these shoes? <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Very unlikely</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Very likely</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="s5-purchase" value="1" required> 1</label>
+                        <label><input type="radio" name="s5-purchase" value="2"> 2</label>
+                        <label><input type="radio" name="s5-purchase" value="3"> 3</label>
+                        <label><input type="radio" name="s5-purchase" value="4"> 4</label>
+                        <label><input type="radio" name="s5-purchase" value="5"> 5</label>
+                        <label><input type="radio" name="s5-purchase" value="6"> 6</label>
+                        <label><input type="radio" name="s5-purchase" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="showSection('section-scenario4')">← Back</button>
+                <button class="btn btn-primary" onclick="validateAndNext('section-scenario5', 'section-scenario6')">Next →</button>
+            </div>
+
+        </div>
+
+        <div class="section" id="section-scenario6">
+            <h2>Scenario 6 of 7: Power Bank</h2>
+            <div class="scenario-badge">📊 Information Overload</div>
+            <div class="product-card">
+                <div class="product-image"><img src="images/product6.jpg" alt="Power Bank Ultra" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=placeholder-img>🛍️ Power Bank Ultra</div>';"></div>
+                <div class="product-details">
+                    <h3>Power Bank Ultra</h3>
+                    <div class="product-rating">⭐⭐⭐⭐⭐ 4.5+ stars</div>
+                    <ul class="product-features">
+                        <li>✓ 20,000 mAh capacity</li>
+                        <li>✓ Fast charging 65W</li>
+                        <li>✓ 8 pages of technical specs</li>
+                        <li>✓ 43 expert reviews with conflicting ratings</li>
+                    </ul>
+                    <div class="product-price" id="price-scenario6"></div>
+                </div>
+            </div>
+
+            <div class="ai-recommendation">
+                <div class="ai-badge">🤖 AI Recommendation</div>
+                <p>"Based on 43 technical parameters and 1,247 user reviews, this power bank scores 8.7/10. Key specs: charging efficiency 94.3%, voltage regulation ±0.2V..."</p>
+            </div>
+
+            <div class="question">
+                <label>17. How overwhelmed do you feel by the product information? <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Not overwhelmed</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Extremely overwhelmed</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="s6-overwhelm" value="1" required> 1</label>
+                        <label><input type="radio" name="s6-overwhelm" value="2"> 2</label>
+                        <label><input type="radio" name="s6-overwhelm" value="3"> 3</label>
+                        <label><input type="radio" name="s6-overwhelm" value="4"> 4</label>
+                        <label><input type="radio" name="s6-overwhelm" value="5"> 5</label>
+                        <label><input type="radio" name="s6-overwhelm" value="6"> 6</label>
+                        <label><input type="radio" name="s6-overwhelm" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <label>18. How likely are you to purchase this power bank? <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Very unlikely</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Very likely</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="s6-purchase" value="1" required> 1</label>
+                        <label><input type="radio" name="s6-purchase" value="2"> 2</label>
+                        <label><input type="radio" name="s6-purchase" value="3"> 3</label>
+                        <label><input type="radio" name="s6-purchase" value="4"> 4</label>
+                        <label><input type="radio" name="s6-purchase" value="5"> 5</label>
+                        <label><input type="radio" name="s6-purchase" value="6"> 6</label>
+                        <label><input type="radio" name="s6-purchase" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <label>19. Would AI help simplify this decision? <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Not at all</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Definitely yes</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="s6-ai-help" value="1" required> 1</label>
+                        <label><input type="radio" name="s6-ai-help" value="2"> 2</label>
+                        <label><input type="radio" name="s6-ai-help" value="3"> 3</label>
+                        <label><input type="radio" name="s6-ai-help" value="4"> 4</label>
+                        <label><input type="radio" name="s6-ai-help" value="5"> 5</label>
+                        <label><input type="radio" name="s6-ai-help" value="6"> 6</label>
+                        <label><input type="radio" name="s6-ai-help" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="showSection('section-scenario5')">← Back</button>
+                <button class="btn btn-primary" onclick="validateAndNext('section-scenario6', 'section-scenario7')">Next →</button>
+            </div>
+
+        </div>
+
+        <div class="section" id="section-scenario7">
+            <h2>Scenario 7 of 7: Tablet</h2>
+            <div class="scenario-badge">💭 Confirmation Bias</div>
+            <div class="product-card">
+                <div class="product-image"><img src="images/product7.jpg" alt="Digital Tablet" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=placeholder-img>🛍️ Digital Tablet</div>';"></div>
+                <div class="product-details">
+                    <h3>Digital Tablet</h3>
+                    <div class="product-rating">⭐⭐⭐⭐⭐ 4.5+ stars</div>
+                    <ul class="product-features">
+                        <li>✓ 10.1" display</li>
+                        <li>✓ 8GB RAM, 256GB storage</li>
+                        <li>✓ Mixed reviews: some love it, some don't</li>
+                        <li>✓ AI highlights only positive reviews by default</li>
+                    </ul>
+                    <div class="product-price" id="price-scenario7"></div>
+                </div>
+            </div>
+
+            <div class="ai-recommendation">
+                <div class="ai-badge">🤖 AI Recommendation</div>
+                <p>"Showing reviews that match your preferences... <strong>Top positive reviews:</strong> 'Best tablet I've owned!' 'Amazing value for the price!'"</p>
+            </div>
+
+            <div class="question">
+                <label>20. How much do you look for information that supports your initial opinion? <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Not at all</span>
+                        <span style="color:#10b981;font-weight:700;">7 = A great deal</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="s7-confirmation" value="1" required> 1</label>
+                        <label><input type="radio" name="s7-confirmation" value="2"> 2</label>
+                        <label><input type="radio" name="s7-confirmation" value="3"> 3</label>
+                        <label><input type="radio" name="s7-confirmation" value="4"> 4</label>
+                        <label><input type="radio" name="s7-confirmation" value="5"> 5</label>
+                        <label><input type="radio" name="s7-confirmation" value="6"> 6</label>
+                        <label><input type="radio" name="s7-confirmation" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <label>21. How likely are you to purchase this tablet? <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Very unlikely</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Very likely</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="s7-purchase" value="1" required> 1</label>
+                        <label><input type="radio" name="s7-purchase" value="2"> 2</label>
+                        <label><input type="radio" name="s7-purchase" value="3"> 3</label>
+                        <label><input type="radio" name="s7-purchase" value="4"> 4</label>
+                        <label><input type="radio" name="s7-purchase" value="5"> 5</label>
+                        <label><input type="radio" name="s7-purchase" value="6"> 6</label>
+                        <label><input type="radio" name="s7-purchase" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="showSection('section-scenario6')">← Back</button>
+                <button class="btn btn-primary" onclick="validateAndNext('section-scenario7', 'section-trust')">Next →</button>
+            </div>
+
+        </div>
+
+        <div class="section" id="section-trust">
+            <h2>Part C: Trust in AI</h2>
+            <p class="section-intro">Rate your agreement with each statement about the AI system (12 questions):</p>
+
+            <div class="question">
+                <label>22. The AI system is reliable. <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Strongly disagree</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Strongly agree</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="trust-1" value="1" required> 1</label>
+                        <label><input type="radio" name="trust-1" value="2"> 2</label>
+                        <label><input type="radio" name="trust-1" value="3"> 3</label>
+                        <label><input type="radio" name="trust-1" value="4"> 4</label>
+                        <label><input type="radio" name="trust-1" value="5"> 5</label>
+                        <label><input type="radio" name="trust-1" value="6"> 6</label>
+                        <label><input type="radio" name="trust-1" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="question">
+                <label>23. I can trust the AI system. <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Strongly disagree</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Strongly agree</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="trust-2" value="1" required> 1</label>
+                        <label><input type="radio" name="trust-2" value="2"> 2</label>
+                        <label><input type="radio" name="trust-2" value="3"> 3</label>
+                        <label><input type="radio" name="trust-2" value="4"> 4</label>
+                        <label><input type="radio" name="trust-2" value="5"> 5</label>
+                        <label><input type="radio" name="trust-2" value="6"> 6</label>
+                        <label><input type="radio" name="trust-2" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="question">
+                <label>24. The AI system is dependable. <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Strongly disagree</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Strongly agree</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="trust-3" value="1" required> 1</label>
+                        <label><input type="radio" name="trust-3" value="2"> 2</label>
+                        <label><input type="radio" name="trust-3" value="3"> 3</label>
+                        <label><input type="radio" name="trust-3" value="4"> 4</label>
+                        <label><input type="radio" name="trust-3" value="5"> 5</label>
+                        <label><input type="radio" name="trust-3" value="6"> 6</label>
+                        <label><input type="radio" name="trust-3" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="question">
+                <label>25. I have confidence in the AI's advice. <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Strongly disagree</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Strongly agree</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="trust-4" value="1" required> 1</label>
+                        <label><input type="radio" name="trust-4" value="2"> 2</label>
+                        <label><input type="radio" name="trust-4" value="3"> 3</label>
+                        <label><input type="radio" name="trust-4" value="4"> 4</label>
+                        <label><input type="radio" name="trust-4" value="5"> 5</label>
+                        <label><input type="radio" name="trust-4" value="6"> 6</label>
+                        <label><input type="radio" name="trust-4" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="question">
+                <label>26. The AI provides accurate recommendations. <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Strongly disagree</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Strongly agree</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="trust-5" value="1" required> 1</label>
+                        <label><input type="radio" name="trust-5" value="2"> 2</label>
+                        <label><input type="radio" name="trust-5" value="3"> 3</label>
+                        <label><input type="radio" name="trust-5" value="4"> 4</label>
+                        <label><input type="radio" name="trust-5" value="5"> 5</label>
+                        <label><input type="radio" name="trust-5" value="6"> 6</label>
+                        <label><input type="radio" name="trust-5" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="question">
+                <label>27. I feel comfortable relying on the AI. <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Strongly disagree</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Strongly agree</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="trust-6" value="1" required> 1</label>
+                        <label><input type="radio" name="trust-6" value="2"> 2</label>
+                        <label><input type="radio" name="trust-6" value="3"> 3</label>
+                        <label><input type="radio" name="trust-6" value="4"> 4</label>
+                        <label><input type="radio" name="trust-6" value="5"> 5</label>
+                        <label><input type="radio" name="trust-6" value="6"> 6</label>
+                        <label><input type="radio" name="trust-6" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="question">
+                <label>28. The AI has my best interests in mind. <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Strongly disagree</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Strongly agree</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="trust-7" value="1" required> 1</label>
+                        <label><input type="radio" name="trust-7" value="2"> 2</label>
+                        <label><input type="radio" name="trust-7" value="3"> 3</label>
+                        <label><input type="radio" name="trust-7" value="4"> 4</label>
+                        <label><input type="radio" name="trust-7" value="5"> 5</label>
+                        <label><input type="radio" name="trust-7" value="6"> 6</label>
+                        <label><input type="radio" name="trust-7" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="question">
+                <label>29. Overall, I trust the AI system. <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Strongly disagree</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Strongly agree</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="trust-8" value="1" required> 1</label>
+                        <label><input type="radio" name="trust-8" value="2"> 2</label>
+                        <label><input type="radio" name="trust-8" value="3"> 3</label>
+                        <label><input type="radio" name="trust-8" value="4"> 4</label>
+                        <label><input type="radio" name="trust-8" value="5"> 5</label>
+                        <label><input type="radio" name="trust-8" value="6"> 6</label>
+                        <label><input type="radio" name="trust-8" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="question">
+                <label>30. The AI understands my preferences. <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Strongly disagree</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Strongly agree</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="trust-9" value="1" required> 1</label>
+                        <label><input type="radio" name="trust-9" value="2"> 2</label>
+                        <label><input type="radio" name="trust-9" value="3"> 3</label>
+                        <label><input type="radio" name="trust-9" value="4"> 4</label>
+                        <label><input type="radio" name="trust-9" value="5"> 5</label>
+                        <label><input type="radio" name="trust-9" value="6"> 6</label>
+                        <label><input type="radio" name="trust-9" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="question">
+                <label>31. The AI's behavior is predictable. <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Strongly disagree</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Strongly agree</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="trust-10" value="1" required> 1</label>
+                        <label><input type="radio" name="trust-10" value="2"> 2</label>
+                        <label><input type="radio" name="trust-10" value="3"> 3</label>
+                        <label><input type="radio" name="trust-10" value="4"> 4</label>
+                        <label><input type="radio" name="trust-10" value="5"> 5</label>
+                        <label><input type="radio" name="trust-10" value="6"> 6</label>
+                        <label><input type="radio" name="trust-10" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="question">
+                <label>32. The AI acts consistently. <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Strongly disagree</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Strongly agree</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="trust-11" value="1" required> 1</label>
+                        <label><input type="radio" name="trust-11" value="2"> 2</label>
+                        <label><input type="radio" name="trust-11" value="3"> 3</label>
+                        <label><input type="radio" name="trust-11" value="4"> 4</label>
+                        <label><input type="radio" name="trust-11" value="5"> 5</label>
+                        <label><input type="radio" name="trust-11" value="6"> 6</label>
+                        <label><input type="radio" name="trust-11" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="question">
+                <label>33. I would follow the AI's recommendations. <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Strongly disagree</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Strongly agree</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="trust-12" value="1" required> 1</label>
+                        <label><input type="radio" name="trust-12" value="2"> 2</label>
+                        <label><input type="radio" name="trust-12" value="3"> 3</label>
+                        <label><input type="radio" name="trust-12" value="4"> 4</label>
+                        <label><input type="radio" name="trust-12" value="5"> 5</label>
+                        <label><input type="radio" name="trust-12" value="6"> 6</label>
+                        <label><input type="radio" name="trust-12" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="showSection('section-scenario7')">← Back</button>
+                <button class="btn btn-primary" onclick="validateAndNext('section-trust', 'section-cognitive')">Continue →</button>
+            </div>
+
+        </div>
+
+        <div class="section" id="section-cognitive">
+            <h2>Part D: Thinking Style</h2>
+            <p class="section-intro">Rate how well each statement describes you (10 questions):</p>
+
+            <div class="question">
+                <label>34. I trust my initial feelings about people. <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Does not describe me at all</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Describes me very well</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="rei-1" value="1" required> 1</label>
+                        <label><input type="radio" name="rei-1" value="2"> 2</label>
+                        <label><input type="radio" name="rei-1" value="3"> 3</label>
+                        <label><input type="radio" name="rei-1" value="4"> 4</label>
+                        <label><input type="radio" name="rei-1" value="5"> 5</label>
+                        <label><input type="radio" name="rei-1" value="6"> 6</label>
+                        <label><input type="radio" name="rei-1" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="question">
+                <label>35. I believe in trusting my hunches. <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Does not describe me at all</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Describes me very well</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="rei-2" value="1" required> 1</label>
+                        <label><input type="radio" name="rei-2" value="2"> 2</label>
+                        <label><input type="radio" name="rei-2" value="3"> 3</label>
+                        <label><input type="radio" name="rei-2" value="4"> 4</label>
+                        <label><input type="radio" name="rei-2" value="5"> 5</label>
+                        <label><input type="radio" name="rei-2" value="6"> 6</label>
+                        <label><input type="radio" name="rei-2" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="question">
+                <label>36. My initial impressions are usually right. <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Does not describe me at all</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Describes me very well</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="rei-3" value="1" required> 1</label>
+                        <label><input type="radio" name="rei-3" value="2"> 2</label>
+                        <label><input type="radio" name="rei-3" value="3"> 3</label>
+                        <label><input type="radio" name="rei-3" value="4"> 4</label>
+                        <label><input type="radio" name="rei-3" value="5"> 5</label>
+                        <label><input type="radio" name="rei-3" value="6"> 6</label>
+                        <label><input type="radio" name="rei-3" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="question">
+                <label>37. I can usually feel when something is right or wrong. <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Does not describe me at all</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Describes me very well</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="rei-4" value="1" required> 1</label>
+                        <label><input type="radio" name="rei-4" value="2"> 2</label>
+                        <label><input type="radio" name="rei-4" value="3"> 3</label>
+                        <label><input type="radio" name="rei-4" value="4"> 4</label>
+                        <label><input type="radio" name="rei-4" value="5"> 5</label>
+                        <label><input type="radio" name="rei-4" value="6"> 6</label>
+                        <label><input type="radio" name="rei-4" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="question">
+                <label>38. I trust my gut feelings. <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Does not describe me at all</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Describes me very well</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="rei-5" value="1" required> 1</label>
+                        <label><input type="radio" name="rei-5" value="2"> 2</label>
+                        <label><input type="radio" name="rei-5" value="3"> 3</label>
+                        <label><input type="radio" name="rei-5" value="4"> 4</label>
+                        <label><input type="radio" name="rei-5" value="5"> 5</label>
+                        <label><input type="radio" name="rei-5" value="6"> 6</label>
+                        <label><input type="radio" name="rei-5" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="question">
+                <label>39. I prefer complex to simple problems. <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Does not describe me at all</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Describes me very well</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="rei-6" value="1" required> 1</label>
+                        <label><input type="radio" name="rei-6" value="2"> 2</label>
+                        <label><input type="radio" name="rei-6" value="3"> 3</label>
+                        <label><input type="radio" name="rei-6" value="4"> 4</label>
+                        <label><input type="radio" name="rei-6" value="5"> 5</label>
+                        <label><input type="radio" name="rei-6" value="6"> 6</label>
+                        <label><input type="radio" name="rei-6" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="question">
+                <label>40. I enjoy intellectual challenges. <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Does not describe me at all</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Describes me very well</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="rei-7" value="1" required> 1</label>
+                        <label><input type="radio" name="rei-7" value="2"> 2</label>
+                        <label><input type="radio" name="rei-7" value="3"> 3</label>
+                        <label><input type="radio" name="rei-7" value="4"> 4</label>
+                        <label><input type="radio" name="rei-7" value="5"> 5</label>
+                        <label><input type="radio" name="rei-7" value="6"> 6</label>
+                        <label><input type="radio" name="rei-7" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="question">
+                <label>41. I like to think through problems carefully. <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Does not describe me at all</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Describes me very well</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="rei-8" value="1" required> 1</label>
+                        <label><input type="radio" name="rei-8" value="2"> 2</label>
+                        <label><input type="radio" name="rei-8" value="3"> 3</label>
+                        <label><input type="radio" name="rei-8" value="4"> 4</label>
+                        <label><input type="radio" name="rei-8" value="5"> 5</label>
+                        <label><input type="radio" name="rei-8" value="6"> 6</label>
+                        <label><input type="radio" name="rei-8" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="question">
+                <label>42. I prefer tasks that require thinking. <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Does not describe me at all</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Describes me very well</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="rei-9" value="1" required> 1</label>
+                        <label><input type="radio" name="rei-9" value="2"> 2</label>
+                        <label><input type="radio" name="rei-9" value="3"> 3</label>
+                        <label><input type="radio" name="rei-9" value="4"> 4</label>
+                        <label><input type="radio" name="rei-9" value="5"> 5</label>
+                        <label><input type="radio" name="rei-9" value="6"> 6</label>
+                        <label><input type="radio" name="rei-9" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="question">
+                <label>43. I enjoy analyzing problems systematically. <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Does not describe me at all</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Describes me very well</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="rei-10" value="1" required> 1</label>
+                        <label><input type="radio" name="rei-10" value="2"> 2</label>
+                        <label><input type="radio" name="rei-10" value="3"> 3</label>
+                        <label><input type="radio" name="rei-10" value="4"> 4</label>
+                        <label><input type="radio" name="rei-10" value="5"> 5</label>
+                        <label><input type="radio" name="rei-10" value="6"> 6</label>
+                        <label><input type="radio" name="rei-10" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="showSection('section-trust')">← Back</button>
+                <button class="btn btn-primary" onclick="validateAndNext('section-cognitive', 'section-tam')">Continue →</button>
+            </div>
+
+        </div>
+
+        <div class="section" id="section-tam">
+            <h2>Part E: AI Acceptance</h2>
+            <p class="section-intro">Rate your agreement about AI shopping assistants (6 questions):</p>
+
+            <div class="question">
+                <label>44. AI recommendations help me shop more effectively. <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Strongly disagree</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Strongly agree</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="tam-1" value="1" required> 1</label>
+                        <label><input type="radio" name="tam-1" value="2"> 2</label>
+                        <label><input type="radio" name="tam-1" value="3"> 3</label>
+                        <label><input type="radio" name="tam-1" value="4"> 4</label>
+                        <label><input type="radio" name="tam-1" value="5"> 5</label>
+                        <label><input type="radio" name="tam-1" value="6"> 6</label>
+                        <label><input type="radio" name="tam-1" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="question">
+                <label>45. AI recommendations improve my shopping decisions. <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Strongly disagree</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Strongly agree</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="tam-2" value="1" required> 1</label>
+                        <label><input type="radio" name="tam-2" value="2"> 2</label>
+                        <label><input type="radio" name="tam-2" value="3"> 3</label>
+                        <label><input type="radio" name="tam-2" value="4"> 4</label>
+                        <label><input type="radio" name="tam-2" value="5"> 5</label>
+                        <label><input type="radio" name="tam-2" value="6"> 6</label>
+                        <label><input type="radio" name="tam-2" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="question">
+                <label>46. AI recommendations are useful for finding products. <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Strongly disagree</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Strongly agree</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="tam-3" value="1" required> 1</label>
+                        <label><input type="radio" name="tam-3" value="2"> 2</label>
+                        <label><input type="radio" name="tam-3" value="3"> 3</label>
+                        <label><input type="radio" name="tam-3" value="4"> 4</label>
+                        <label><input type="radio" name="tam-3" value="5"> 5</label>
+                        <label><input type="radio" name="tam-3" value="6"> 6</label>
+                        <label><input type="radio" name="tam-3" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="question">
+                <label>47. Learning to use AI shopping tools is easy. <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Strongly disagree</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Strongly agree</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="tam-4" value="1" required> 1</label>
+                        <label><input type="radio" name="tam-4" value="2"> 2</label>
+                        <label><input type="radio" name="tam-4" value="3"> 3</label>
+                        <label><input type="radio" name="tam-4" value="4"> 4</label>
+                        <label><input type="radio" name="tam-4" value="5"> 5</label>
+                        <label><input type="radio" name="tam-4" value="6"> 6</label>
+                        <label><input type="radio" name="tam-4" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="question">
+                <label>48. AI shopping interfaces are clear and understandable. <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Strongly disagree</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Strongly agree</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="tam-5" value="1" required> 1</label>
+                        <label><input type="radio" name="tam-5" value="2"> 2</label>
+                        <label><input type="radio" name="tam-5" value="3"> 3</label>
+                        <label><input type="radio" name="tam-5" value="4"> 4</label>
+                        <label><input type="radio" name="tam-5" value="5"> 5</label>
+                        <label><input type="radio" name="tam-5" value="6"> 6</label>
+                        <label><input type="radio" name="tam-5" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="question">
+                <label>49. It is easy to get AI to do what I want. <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Strongly disagree</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Strongly agree</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="tam-6" value="1" required> 1</label>
+                        <label><input type="radio" name="tam-6" value="2"> 2</label>
+                        <label><input type="radio" name="tam-6" value="3"> 3</label>
+                        <label><input type="radio" name="tam-6" value="4"> 4</label>
+                        <label><input type="radio" name="tam-6" value="5"> 5</label>
+                        <label><input type="radio" name="tam-6" value="6"> 6</label>
+                        <label><input type="radio" name="tam-6" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="showSection('section-cognitive')">← Back</button>
+                <button class="btn btn-primary" onclick="validateAndNext('section-tam', 'section-crt')">Continue →</button>
+            </div>
+
+        </div>
+
+        <div class="section" id="section-crt">
+            <h2>Part F: Analytical Thinking</h2>
+            <p class="section-intro">Please answer these 3 questions (type your numerical answer):</p>
+
+            <div class="question">
+                <label>50. A bat and a ball cost ₨1,100 in total. The bat costs ₨1,000 more than the ball. How much does the ball cost? <span class="required">*</span></label>
+                <input type="number" name="crt-1" placeholder="Enter amount in ₨" required>
+            </div>
+
+            <div class="question">
+                <label>51. If it takes 5 machines 5 minutes to make 5 widgets, how many minutes would it take 100 machines to make 100 widgets? <span class="required">*</span></label>
+                <input type="number" name="crt-2" placeholder="Enter minutes" required>
+            </div>
+
+            <div class="question">
+                <label>52. In a lake, there is a patch of lily pads. Every day, the patch doubles in size. If it takes 48 days for the patch to cover the entire lake, how many days would it take to cover half the lake? <span class="required">*</span></label>
+                <input type="number" name="crt-3" placeholder="Enter days" required>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="showSection('section-tam')">← Back</button>
+                <button class="btn btn-primary" onclick="validateAndNext('section-crt', 'section-explainability')">Continue →</button>
+            </div>
+
+        </div>
+
+        <div class="section" id="section-explainability">
+            <h2>Part G: AI Explanation Preferences</h2>
+            <p class="section-intro">Tell us about your preferences for AI explanations (3 questions):</p>
+
+            <div class="question">
+                <label>53. What type of AI explanation do you prefer? <span class="required">*</span></label>
+                <div class="radio-group">
+                    <label><input type="radio" name="explain-type" value="simple" required> Simple summary ("Similar to products you liked")</label>
+                    <label><input type="radio" name="explain-type" value="detailed"> Detailed reasoning ("Based on your history, reviews, and price range...")</label>
+                    <label><input type="radio" name="explain-type" value="visual"> Visual explanation (charts, highlights)</label>
+                    <label><input type="radio" name="explain-type" value="none"> No explanation needed</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <label>54. How important is it for AI to explain its recommendations? <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Not important</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Very important</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="explain-importance" value="1" required> 1</label>
+                        <label><input type="radio" name="explain-importance" value="2"> 2</label>
+                        <label><input type="radio" name="explain-importance" value="3"> 3</label>
+                        <label><input type="radio" name="explain-importance" value="4"> 4</label>
+                        <label><input type="radio" name="explain-importance" value="5"> 5</label>
+                        <label><input type="radio" name="explain-importance" value="6"> 6</label>
+                        <label><input type="radio" name="explain-importance" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <label>55. How transparent should AI be about its limitations? <span class="required">*</span></label>
+                <div class="likert-scale">
+                    <div class="likert-scale-header" style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.2rem;">
+                        <span style="color:#ef4444;font-weight:700;">1 = Not transparent</span>
+                        <span style="color:#10b981;font-weight:700;">7 = Fully transparent</span>
+                    </div>
+                    <div class="likert-row">
+                        <div class="likert-options">
+                        <label><input type="radio" name="explain-transparency" value="1" required> 1</label>
+                        <label><input type="radio" name="explain-transparency" value="2"> 2</label>
+                        <label><input type="radio" name="explain-transparency" value="3"> 3</label>
+                        <label><input type="radio" name="explain-transparency" value="4"> 4</label>
+                        <label><input type="radio" name="explain-transparency" value="5"> 5</label>
+                        <label><input type="radio" name="explain-transparency" value="6"> 6</label>
+                        <label><input type="radio" name="explain-transparency" value="7"> 7</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="showSection('section-crt')">← Back</button>
+                <button class="btn btn-primary btn-large" onclick="completeSurvey()">🎉 Submit Survey</button>
+            </div>
+
+        </div>
+
+        <div class="section" id="section-thankyou">
+            <div class="thankyou-container">
+                <h1>🎉 Thank You!</h1>
+                <p class="thankyou-message">Your responses have been recorded successfully.</p>
+                <div class="completion-stats">
+                    <div class="stat-box">
+                        <div class="stat-number" id="finalTime">--:--</div>
+                        <div class="stat-label">Completion Time</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">55</div>
+                        <div class="stat-label">Questions Answered</div>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <h3>What Happens Next?</h3>
+                    <ul>
+                        <li>✅ Your responses have been saved securely</li>
+                        <li>📊 Your data will contribute to important AI research</li>
+                        <li>🎓 Results will be used for academic purposes only</li>
+                    </ul>
+                </div>
+                <p>Questions? Contact: <a href="mailto:sidrashahid535@gmail.com">sidrashahid535@gmail.com</a></p>
+            </div>
+
+        </div>
+
+
+    </div><!-- /container -->
+
+    <footer>
+        <p>© 2026 NED University | Research Study | Your privacy is protected</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

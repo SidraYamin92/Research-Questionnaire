@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questionnaire Data Viewer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #1f2937;
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #2563eb;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2563eb;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .actions {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #1f2937;
+            border: 2px solid #e5e7eb;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+
+        .response-list {
+            margin-top: 30px;
+        }
+
+        .response-card {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.2s;
+        }
+
+        .response-card:hover {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-color: #2563eb;
+        }
+
+        .response-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .response-id {
+            font-weight: 700;
+            color: #2563eb;
+            font-size: 1.1rem;
+        }
+
+        .response-time {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        .response-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-label {
+            font-size: 0.75rem;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .detail-value {
+            font-size: 1rem;
+            color: #1f2937;
+            font-weight: 500;
+        }
+
+        .toggle-details {
+            margin-top: 15px;
+            padding: 8px 16px;
+            background: #e0e7ff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #2563eb;
+        }
+
+        .toggle-details:hover {
+            background: #c7d2fe;
+        }
+
+        .full-data {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: #1f2937;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
+
+        .full-data.show {
+            display: block;
+        }
+
+        .full-data pre {
+            color: #10b981;
+            font-size: 0.875rem;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+        }
+
+        .password-prompt {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .password-box {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .password-box h2 {
+            margin-bottom: 20px;
+            color: #1f2937;
+        }
+
+        .password-box input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        .password-box input:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .error {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .error.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Password Protection -->
+    <div class="password-prompt" id="passwordPrompt">
+        <div class="password-box">
+            <h2>🔒 Access Protected</h2>
+            <p style="margin-bottom: 20px; color: #6b7280;">Enter password to view questionnaire data:</p>
+            <input type="password" id="passwordInput" placeholder="Enter password"
+                onkeypress="if(event.key==='Enter') checkPassword()">
+            <p class="error" id="errorMsg">Incorrect password. Please try again.</p>
+            <button class="btn btn-primary" style="width: 100%;" onclick="checkPassword()">Access Data</button>
+        </div>
+    </div>
+
+    <div class="container" id="mainContent" style="display: none;">
+        <h1>📊 Questionnaire Data Viewer</h1>
+        <p style="color: #6b7280; margin-bottom: 30px;">View and analyze questionnaire responses</p>
+
+        <!-- Statistics -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalResponses">0</div>
+                <div class="stat-label">Total Responses</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="todayResponses">0</div>
+                <div class="stat-label">Today</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="avgTime">--:--</div>
+                <div class="stat-label">Avg. Completion Time</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="lastResponse">--</div>
+                <div class="stat-label">Last Response</div>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="actions">
+            <a href="data/responses.csv" class="btn btn-primary" download>📥 Download CSV</a>
+            <button class="btn btn-secondary" onclick="refreshData()">🔄 Refresh</button>
+            <button class="btn btn-secondary" onclick="exportJSON()">📄 Export All JSON</button>
+        </div>
+
+        <!-- Response List -->
+        <div class="response-list" id="responseList">
+            <p style="color: #6b7280;">Loading responses...</p>
+        </div>
+    </div>
+
+    <script>
+        // Password protection
+        const CORRECT_PASSWORD = 'research2026'; // CHANGE THIS!
+
+        function checkPassword() {
+            const input = document.getElementById('passwordInput');
+            const error = document.getElementById('errorMsg');
+
+            if (input.value === CORRECT_PASSWORD) {
+                document.getElementById('passwordPrompt').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                loadData();
+            } else {
+                error.classList.add('show');
+                input.value = '';
+                input.focus();
+            }
+        }
+
+        // Load and display data
+        async function loadData() {
+            try {
+                // In production, this would fetch from your PHP endpoint
+                // For now, we'll use localStorage as demo
+                const data = localStorage.getItem('questionnaire_data');
+
+                if (data) {
+                    const parsed = JSON.parse(data);
+                    displayResponse(parsed);
+                    updateStats([parsed]);
+                } else {
+                    document.getElementById('responseList').innerHTML =
+                        '<p style="color: #6b7280;">No responses yet. Complete a test survey to see data here.</p>';
+                }
+
+                // In production, fetch from server:
+                // const response = await fetch('get-responses.php');
+                // const responses = await response.json();
+                // displayResponses(responses);
+
+            } catch (error) {
+                console.error('Error loading data:', error);
+                document.getElementById('responseList').innerHTML =
+                    '<p style="color: #ef4444;">Error loading data. Check console for details.</p>';
+            }
+        }
+
+        function displayResponse(data) {
+            const container = document.getElementById('responseList');
+            const id = data.participant_id || 'TEST_' + Date.now();
+            const time = formatTime(data.metadata?.totalTime || 0);
+            const date = new Date(data.metadata?.completionDate || Date.now()).toLocaleString();
+
+            const card = document.createElement('div');
+            card.className = 'response-card';
+            card.innerHTML = `
+                <div class="response-header">
+                    <div class="response-id">${id}</div>
+                    <div class="response-time">${date}</div>
+                </div>
+                <div class="response-details">
+                    <div class="detail-item">
+                        <div class="detail-label">Completion Time</div>
+                        <div class="detail-value">${time}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Age Group</div>
+                        <div class="detail-value">${data.responses?.age || 'N/A'}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Gender</div>
+                        <div class="detail-value">${data.responses?.gender || 'N/A'}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Education</div>
+                        <div class="detail-value">${data.responses?.education || 'N/A'}</div>
+                    </div>
+                </div>
+                <button class="toggle-details" onclick="toggleDetails(this)">View Full Data</button>
+                <div class="full-data">
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                </div>
+            `;
+
+            container.innerHTML = '';
+            container.appendChild(card);
+        }
+
+        function toggleDetails(button) {
+            const fullData = button.nextElementSibling;
+            fullData.classList.toggle('show');
+            button.textContent = fullData.classList.contains('show') ? 'Hide Full Data' : 'View Full Data';
+        }
+
+        function updateStats(responses) {
+            document.getElementById('totalResponses').textContent = responses.length;
+
+            const today = new Date().toDateString();
+            const todayCount = responses.filter(r => {
+                const date = new Date(r.metadata?.completionDate);
+                return date.toDateString() === today;
+            }).length;
+            document.getElementById('todayResponses').textContent = todayCount;
+
+            const avgTime = responses.reduce((sum, r) => sum + (r.metadata?.totalTime || 0), 0) / responses.length;
+            document.getElementById('avgTime').textContent = formatTime(avgTime);
+
+            const latest = responses[responses.length - 1];
+            if (latest) {
+                const date = new Date(latest.metadata?.completionDate);
+                const now = new Date();
+                const diff = now - date;
+                const hours = Math.floor(diff / 3600000);
+                document.getElementById('lastResponse').textContent = hours < 1 ? 'Just now' : `${hours}h ago`;
+            }
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+
+        function refreshData() {
+            loadData();
+        }
+
+        function exportJSON() {
+            const data = localStorage.getItem('questionnaire_data');
+            if (data) {
+                const blob = new Blob([data], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `questionnaire_data_${Date.now()}.json`;
+                a.click();
+            } else {
+                alert('No data to export');
+            }
+        }
+    </script>
+</body>
+
+</html>
